@@ -1,0 +1,13 @@
+Saldo de gols:
+***
+select 
+(j.fk_equipe1) as equipe,
+(j.equipe2_gols+j1.equipe1_gols) as gols_sofridos,
+(j.equipe1_gols + j1.equipe2_gols) as gols_marcados,
+(j.equipe1_gols + j1.equipe2_gols - j.equipe2_gols - j1.equipe1_gols) as saldo
+
+from jogo j
+join 
+(select equipe2_gols,equipe1_gols,fk_equipe2 from jogo) j1
+on j1.fk_equipe2 = j.fk_equipe1;
+***
