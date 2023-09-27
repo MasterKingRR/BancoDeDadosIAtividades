@@ -11,3 +11,13 @@ join
 (select equipe2_gols,equipe1_gols,fk_equipe2 from jogo) j1
 on j1.fk_equipe2 = j.fk_equipe1;
 ***
+
+***
+Artilheiro:
+
+select nome as artilheiro,SUM(gols_marcados) as gols 
+from atleta 
+GROUP BY artilheiro 
+ORDER BY gols DESC
+LIMIT 1
+; 
