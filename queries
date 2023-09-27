@@ -1,9 +1,9 @@
 SALDO DE GOLS:
 **************
-select T.equipe,T.equipe1,gols_sofridos+gols_sofridos1
+select T.equipe,T.equipe1,(gols_sofridos+gols_sofridos1) as gols_sofridos
 from
 (
-select * from 
+select a.equipe,b.equipe1,IFNULL(a.gols_sofridos,0)as gols_sofridos,IFNULL(b.gols_sofridos1,0) as gols_sofridos1 from 
 (select fk_equipe2 as equipe, IFNULL(SUM(equipe1_gols),0) as gols_sofridos from jogo GROUP BY equipe) a 
 right join
 (select fk_equipe1 as equipe1, IFNULL(SUM(equipe2_gols),0) as gols_sofridos1 from jogo GROUP BY equipe1)b
@@ -11,11 +11,11 @@ on (a.equipe = b.equipe1)
 
 UNION 
 
-select *  from
-(select fk_equipe2 as equipe1,IFNULL(SUM(equipe1_gols),0) as gols_sofridos from jogo GROUP BY equipe1) a 
+select a.equipe,b.equipe1,IFNULL(a.gols_sofridos,0),IFNULL(b.gols_sofridos1,0)  from
+(select fk_equipe2 as equipe,IFNULL(SUM(equipe1_gols),0) as gols_sofridos from jogo GROUP BY equipe) a 
 left join
-(select fk_equipe1 as equipe1, IFNULL(SUM(equipe2_gols),0) as gols_sofridos from jogo GROUP BY equipe1)b
-on (a.equipe1 = b.equipe1) 
+(select fk_equipe1 as equipe1, IFNULL(SUM(equipe2_gols),0) as gols_sofridos1 from jogo GROUP BY equipe1)b
+on (a.equipe = b.equipe1) 
 ) as T
 ***********************
 Saldo de gols:
